@@ -1,0 +1,59 @@
+/* Sass Template */
+@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Oxygen&family=Raleway:wght@300;400&display=swap");
+
+/* font template */
+.font-oswald {
+  font-family: "Oswald", sans-serif;
+}
+.font-rale {
+  font-family: "Oxygen", sans-serif;
+}
+.font-oxygen {
+  font-family: "Raleway", sans-serif;
+}
+
+/* custom font sizes */
+.fs-8 {
+  font-size: 8px;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-16 {
+  font-size: 16px;
+}
+.fs-18 {
+  font-size: 18px;
+}
+.fs-20 {
+  font-size: 20px;
+}
+
+/* color template */
+.color-primary {
+  color: #003859;
+}
+.color-primary-bg {
+  background: #003859;
+}
+.color-second {
+  color: #00a5c4;
+}
+.color-second-bg {
+  background: #00a5c4;
+}
+
+.color-yellow {
+  color: #ffd289;
+}
+.color-yellow-bg {
+  background: #ffd289;
+}
