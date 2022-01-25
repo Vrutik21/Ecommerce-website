@@ -106,14 +106,31 @@
   outline: none;
 }
 
+#banner-area button.owl-prev {
+  color: #fff;
+  left: 10em;
+  font-size: 1.5em;
+}
+
+#banner-area button.owl-next {
+  color: #fff;
+  right: 10em;
+  font-size: 1.5em;
+}
+
 .owl-nav button.owl-prev {
-  left: 0;
+  left: -3.5em;
 }
 .owl-nav button.owl-next {
-  right: 0;
+  right: -3.5em;
 }
 .owl-nav button.owl-prev span,
 .owl-nav button.owl-next span {
-  font-size: 70px;
   color: #003859;
+}
+
+/* Special-price */
+.grid-item {
+  margin-top: 1rem;
+  margin-right: 1rem;
 }
