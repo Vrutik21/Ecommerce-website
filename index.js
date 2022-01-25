@@ -14,12 +14,32 @@ $(document).ready(function () {
     ],
   });
 
+  // top-sale
   $("#top-sale .owl-carousel").owlCarousel({
     loop: true,
     nav: true,
     dots: false,
     autoplay: true,
     autoplayTimeout: 6000,
+    smartSpeed: 1000,
+    navText: [
+      "<i class='fa fa-chevron-left'></i>",
+      "<i class='fa fa-chevron-right'></i>",
+    ],
+    resonsive: {
+      0: { items: 1 },
+      600: { items: 3 },
+      1000: { items: 5 },
+    },
+  });
+
+  // Latest products
+  $("#latest-product .owl-carousel").owlCarousel({
+    loop: true,
+    nav: true,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 7000,
     smartSpeed: 1000,
     navText: [
       "<i class='fa fa-chevron-left'></i>",
