@@ -52,6 +52,24 @@ $(document).ready(function () {
     },
   });
 
+  // Blogs
+  $("#blogs .owl-carousel").owlCarousel({
+    loop: true,
+    nav: true,
+    dots: true,
+    autoplay: true,
+    autoplayTimeout: 10000,
+    smartSpeed: 1000,
+    navText: [
+      "<i class='fa fa-chevron-left'></i>",
+      "<i class='fa fa-chevron-right'></i>",
+    ],
+    resonsive: {
+      0: { items: 1 },
+      600: { items: 2 },
+    },
+  });
+
   // Isotope filter
   var $grid = $(".grid").isotope({
     // options
