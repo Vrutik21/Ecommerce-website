@@ -38,6 +38,10 @@
 }
 
 /* color template */
+.color-white {
+  color: white;
+}
+
 .color-primary {
   color: #003859;
 }
@@ -47,6 +51,14 @@
 .color-second {
   color: #00a5c4;
 }
+
+.color-blue {
+  color: #023fb1;
+}
+.color-blue-bg {
+  background: #023fb1;
+}
+
 .color-second-bg {
   background: rgb(9, 32, 121);
   background: radial-gradient(
