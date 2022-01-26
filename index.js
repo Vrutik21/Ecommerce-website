@@ -82,4 +82,28 @@ $(document).ready(function () {
     var filterValue = $(this).attr("data-filter");
     $grid.isotope({ filter: filterValue });
   });
+
+  // quantity
+  let $qty_up = $(".qty-up");
+  let $qty_down = $(".qty-down");
+  // let $input = $(".qty-input");
+
+  // quantity up click event
+  $qty_up.click(function (e) {
+    let $input = $(`.qty-input[data-id='${$(this).data("id")}']`);
+    if ($input.val() >= 1 && $input.val() <= 9) {
+      $input.val(function (i, oldval) {
+        return ++oldval;
+      });
+    }
+  });
+  // quantity down click event
+  $qty_down.click(function (e) {
+    let $input = $(`.qty-input[data-id='${$(this).data("id")}']`);
+    if ($input.val() > 1 && $input.val() <= 10) {
+      $input.val(function (i, oldval) {
+        return --oldval;
+      });
+    }
+  });
 });
