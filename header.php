@@ -38,6 +38,11 @@
 
     <!-- Custom CSS file -->
     <link rel="stylesheet" href="style.css" />
+
+    <?php 
+    // require MySQL connection
+    require('DBController.php')
+    ?>
   </head>
   <body>
     <!-- header -->
