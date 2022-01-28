@@ -24,7 +24,7 @@ class DBController
     public function __destruct(){
         $this->closeConnection();
     }
-//    closing connection
+    //  close connection
     protected function closeConnection(){
         if($this->con!=null){
             $this->con->close();
