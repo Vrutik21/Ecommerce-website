@@ -41,7 +41,7 @@
 
     <?php 
     // require MySQL connection
-    require('DBController.php')
+    require ('functions.php');
     ?>
   </head>
   <body>

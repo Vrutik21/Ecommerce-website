@@ -16,8 +16,8 @@ class DBController
     {
         $this->con=mysqli_connect($this->host,$this->user,$this->password,$this->database);
     //  check connection
-        if($this->con->connect_error){
-            echo "CONNECTION FAILED: ".$this->con->connect_error;
+        if($this->con->connect_error) {
+            echo "CONNECTION FAILED: " . $this->con->connect_error;
         }
              
     }
