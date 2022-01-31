@@ -19,7 +19,7 @@ shuffle($product_shuffle);?>
               <?php foreach ($product_shuffle as $item){?>
             <div class="item p-2">
               <div class="product">
-                <a href="#"
+                <a href="<?php printf('%s?item_id=%s','latest_products.php',$item['item_id']);?>"
                   ><img
                     src="<?php echo $item['item_image']??'./images/ADATA Premier SP550 SSD.png';?>"
                     alt=""
