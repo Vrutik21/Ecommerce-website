@@ -65,4 +65,14 @@ public function getSum($add){
             }
         }
     }
+
+//get item_id of all cart items
+public function getCartId($cartArr=null,$key='item_id'){
+    if ($cartArr!=null){
+        $cart_id = array_map(function ($value) use ($key){
+            return $value[$key];
+        },$cartArr);
+        return $cart_id;
+    }
+}
 }

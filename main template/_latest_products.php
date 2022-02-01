@@ -3,7 +3,7 @@ shuffle($product_shuffle);
 
 //request method post
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-    if (isset($_POST['product'])){
+    if (isset($_POST['latest_products'])){
         //    call method addToCart
         $cart->addToCart($_POST['user_id'],$_POST['item_id']);
     }
@@ -41,7 +41,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                     <form method="post">
                         <input type="hidden" name="item_id" value="<?php echo $item['item_id']??'1'; ?>">
                         <input type="hidden" name="user_id" value="<?php echo 1; ?>">
-                        <button type="submit" name="latest_products" class="btn btn-outline-primary">Add to cart</button>
+                        <?php
+                        if (in_array($item['item_id'],$cart->getCartId($product->getData('cart'))??[])){
+                            echo '<button type="submit" disabled class="btn btn-outline-success">In the cart</button>';
+                        }else{
+                            echo '<button type="submit" name="latest_products" class="btn btn-outline-primary">Add to cart</button>';
+                        }
+                        ?>
+
                     </form>
                 </div>
               </div>

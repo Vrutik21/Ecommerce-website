@@ -56,7 +56,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                                 <form method="post">
                                     <input type="hidden" name="item_id" value="<?php echo $item['item_id']??'1'; ?>">
                                     <input type="hidden" name="user_id" value="<?php echo 1; ?>">
-                                    <button type="submit" name="special_products" class="btn btn-outline-primary mb-5">Add to cart</button>
+                                    <?php
+                                    if (in_array($item['item_id'],$cart->getCartId($product->getData('cart'))??[])){
+                                        echo '<button type="submit" disabled class="btn btn-outline-success">In the cart</button>';
+                                    }else{
+                                        echo '<button type="submit" name="special_products" class="btn btn-outline-primary">Add to cart</button>';
+                                    }
+                                    ?>
                                 </form>
                             </div>
                         </div>
