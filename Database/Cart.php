@@ -54,4 +54,15 @@ public function getSum($add){
         return sprintf('%.2f',$sum);
     }
 }
+
+//delete cart items
+    public function deleteCart($item_id=null,$table='cart'){
+        if ($item_id!=null){
+            $result = $this->db->con->query(query: "DELETE FROM {$table} WHERE item_id={$item_id}");
+            if ($result){
+                header("Location:".$_SERVER['PHP_SELF']);
+                return$result;
+            }
+        }
+    }
 }

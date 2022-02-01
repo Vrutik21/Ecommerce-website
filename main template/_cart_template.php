@@ -1,5 +1,13 @@
 <!-- main -->
 <main id="main-site">
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD']='POST'){
+        if (isset($_POST['delete-cart-item'])){
+$deleteitem = $cart->deleteCart($_POST['item_id']);
+        }
+    }
+    ?>
     <!-- shopping cart -->
     <section id="cart" class="py-3">
         <div class="container-fluid w-75">
@@ -50,7 +58,11 @@
                                         <i class="fas fa-angle-down"></i>
                                     </button>
                                 </div>
-                                <button class="btn text-danger border-right">Delete</button>
+                                <form method="post">
+                                    <input type="hidden" value="<?php echo $item['item_id']??0;?>" name="item_id">
+                                    <button type="submit" class="btn text-danger border-right" name="delete-cart-item">Delete</button>
+                                </form>
+
                                 <button class="btn text-danger">Save for later</button>
                             </div>
                             <!-- !quantity -->
