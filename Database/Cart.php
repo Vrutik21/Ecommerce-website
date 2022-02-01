@@ -43,4 +43,15 @@ public function addToCart($userid,$itemid){
         }
     }
 }
+
+//calculate subtotal
+public function getSum($add){
+    if (is_array($add)){
+        $sum=0;
+        foreach ($add as $item){
+            $sum += floatval($item[0]);
+        }
+        return sprintf('%.2f',$sum);
+    }
+}
 }

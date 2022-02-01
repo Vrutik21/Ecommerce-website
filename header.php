@@ -39,7 +39,7 @@
     <!-- Custom CSS file -->
     <link rel="stylesheet" href="style.css" />
 
-    <?php 
+    <?php
     // require MySQL connection
     require ('functions.php');
     ?>
@@ -62,7 +62,7 @@
         class="navbar navbar-expand-lg navbar-dark color-second-bg font-oxygen fw-bold"
       >
         <div class="container-fluid m-auto">
-          <a class="navbar-brand" href="#">Shopcart</a>
+          <a class="navbar-brand" href="index.php">Shopcart</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -113,11 +113,11 @@
               </button>
             </form>
             <form action="#" class="font-size-14 font-rale">
-              <a href="#" class="py-2 rounded-pill color-primary-bg">
+              <a href="cart.php" class="py-2 rounded-pill color-primary-bg">
                 <span class="px-2 font-size-16 text-white"
                   ><i class="fas fa-shopping-cart"></i
                 ></span>
-                <span class="px-3 py-2 rounded-pill text-dark bg-light">0</span>
+                <span class="px-3 py-2 rounded-pill text-dark bg-light"><?php echo count($product->getData(table: 'cart'))?></span>
               </a>
             </form>
           </div>

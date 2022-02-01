@@ -1,11 +1,13 @@
 <!-- top-sale -->
-<?php $product_shuffle= $product->getData($table='top_sale');
+<?php $product_shuffle= $product->getData($table='product');
 shuffle($product_shuffle);
 
 //request method post
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-//    call method addToCart
-    $cart->addToCart($_POST['user_id'],$_POST['item_id']);
+    if (isset($_POST['top_sale_submit'])){
+        //    call method addToCart
+        $cart->addToCart($_POST['user_id'],$_POST['item_id']);
+    }
 }
 ?>
 

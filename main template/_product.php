@@ -1,6 +1,6 @@
 <?php
 $item_id = $_GET['item_id']??1;
-foreach ($product->getData($table='top_sale')as $item){
+foreach ($product->getData($table='product')as $item){
     if ($item['item_id']==$item_id){
     ?>
 
@@ -32,7 +32,7 @@ foreach ($product->getData($table='top_sale')as $item){
             </div>
             <div class="col-sm-6">
                 <h6 class="fs-20"><?php echo $item['item_name']??'Unknown';?></h6>
-                <p class="fs-16 fw-bold m-0">By <?php echo $item['item_brand']??'Brand';?></p>
+                <p class="fs-16 fw-bold m-0">By <?php echo $item['item_company']??'Brand';?></p>
                 <div class="d-flex">
                     <div class="rating text-warning fs-12 text-center">
                         <span><i class="fas fa-star"></i></span>
