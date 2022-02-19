@@ -4,22 +4,22 @@ ob_start();
 include("header.php");
 
 // banner-area
-include("main template\_banner_area.php");
+include("templates\_banner_area.php");
  
 // top-sale
-include("main template\_top_sale.php");
+include("templates\_top_sale.php");
 
 // special-price
-include("main template\_special_price.php");
+include("templates\_special_price.php");
 
 //ad-template
-include ("main template\_ad_template.php");
+include("templates\_ad_template.php");
 
 // latest-products
-include("main template\_latest_products.php");
+include("templates\_latest_products.php");
  
 // blogs
-include("main template\_blogs.php");
+include("templates\_blogs.php");
 
 // footer
 include("footer.php")

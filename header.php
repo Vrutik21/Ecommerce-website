@@ -1,3 +1,6 @@
+<?php
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,14 +49,14 @@
   </head>
   <body>
     <!-- header -->
-    <header id="head">
+    <header id="head" class="font-rale">
       <div class="strip d-flex justify-content-between px-4 py-1 bg-light">
         <p class="font-rale fs-6 text-black-50 m-0">
           B-2 Suryadeep Bunglows Sangath-3 Motera Ahmedabad-380005
         </p>
         <div class="font-rale fs-14">
           <a href="#" class="px-3 border-right border-left text-dark">Login</a>
-          <a href="#" class="px-3 border-right text-dark">Wishlist(0)</a>
+          <a href="cart.php" class="px-3 border-right text-dark">Wishlist(<?php echo count($product->getData(table: 'wishlist'))?>)</a>
         </div>
       </div>
 
@@ -77,9 +80,8 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#"
-                  >On Sale</a
-                >
+                <a class="nav-link" aria-current="page" href="#"
+                  >On Sale </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Category</a>

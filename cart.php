@@ -5,11 +5,14 @@ include("header.php");
 ?>
 
 <?php
-//products
-include ("main template\_cart_template.php");
+//display cart items if not empty else show empty cart
+count($product->getData("cart")) ? include("templates\_cart_template.php"):include ("templates/_cart_empty.php");
+
+//display wishlist items if not empty else show empty cart
+count($product->getData("wishlist")) ? include("templates\_wishlist_template.php"):include ("templates/_wishlist_empty.php");
 
 // top-sale
-include("main template\_latest_products.php");
+include("templates\_latest_products.php");
 ?>
 
 <?php

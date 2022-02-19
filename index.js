@@ -86,24 +86,58 @@ $(document).ready(function () {
   // quantity
   let $qty_up = $(".qty-up");
   let $qty_down = $(".qty-down");
+  let $deal_price = $("#deal-price");
   // let $input = $(".qty-input");
 
   // quantity up click event
-  $qty_up.click(function (e) {
+  $qty_up.click(function () {
     let $input = $(`.qty-input[data-id='${$(this).data("id")}']`);
-    if ($input.val() >= 1 && $input.val() <= 9) {
-      $input.val(function (i, oldval) {
-        return ++oldval;
-      });
-    }
+    let $price = $(`.product-price[data-id='${$(this).data("id")}']`);
+
+    //change product price using ajax call
+    $.ajax({url:"ajax.php",type:'POST',data:{itemid:$(this).data("id")},success:function (response){
+    let obj= JSON.parse(response);
+    let item_price = obj[0]['item_price'];
+
+        if ($input.val() >= 1 && $input.val() <= 9) {
+          $input.val(function (i, oldval) {
+            return ++oldval;
+          });
+
+      //add price of product
+    $price.text(parseInt(item_price * $input.val()).toFixed(2));
+
+        // set subtotal price
+        let subtotal = parseInt($deal_price.text()) + parseInt(item_price);
+        $deal_price.text(subtotal.toFixed(2));
+        }
+      //closing ajax request
+      }});
   });
+
   // quantity down click event
-  $qty_down.click(function (e) {
+  $qty_down.click(function () {
     let $input = $(`.qty-input[data-id='${$(this).data("id")}']`);
+    let $price = $(`.product-price[data-id='${$(this).data("id")}']`);
+
+    //change product price using ajax call
+    $.ajax({url:"ajax.php",type:'POST',data:{itemid:$(this).data("id")},success:function (response){
+        let obj= JSON.parse(response);
+        let item_price = obj[0]['item_price'];
+
     if ($input.val() > 1 && $input.val() <= 10) {
       $input.val(function (i, oldval) {
         return --oldval;
       });
+
+        //add price of product
+        $price.text(parseInt(item_price * $input.val()).toFixed(2));
+
+        // set subtotal price
+        let subtotal = parseInt($deal_price.text()) - parseInt(item_price);
+        $deal_price.text(subtotal.toFixed(2));
     }
+        //closing ajax request
+      }});
   });
 });
