@@ -2,7 +2,7 @@
 shuffle($product_shuffle);
 
 //request method post
-if ($_SERVER['REQUEST_METHOD']=='GET'){
+if ($_SERVER['REQUEST_METHOD']=='POST'){
     if (isset($_POST['latest_products'])){
         //    call method addToCart
         $cart->addToCart($_POST['user_id'],$_POST['item_id']);

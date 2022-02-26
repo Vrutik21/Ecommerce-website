@@ -1,0 +1,31 @@
+/** signup page*/
+.image{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+    background: url("../images/—Pngtree—web banner blue background material_1302670.jpg") no-repeat;
+    background-size: cover;
+    filter: blur(6px);
+}
+
+@media (max-width: 600px) { /* Change this to 400px, 800px for demo purpose */
+    #signup{
+        display: flex;
+        flex-direction: column; /* For vertical placement of items */
+    }
+    #sign {
+        order: 2;
+    }
+}
+
+@media (max-width: 600px) { /* Change this to 400px, 800px for demo purpose */
+    #login{
+        display: flex;
+        flex-direction: column; /* For vertical placement of items */
+    }
+    #log {
+        order: 2;
+    }
+}

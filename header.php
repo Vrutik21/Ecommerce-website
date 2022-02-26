@@ -1,5 +1,12 @@
 <?php
-ob_start();
+session_start();
+include('Login/helper.php');
+
+$user = array();
+if (isset($_SESSION['user_id'])) {
+require('Login/connection.php');
+$user = get_user_info($con, $_SESSION['user_id']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +47,7 @@ ob_start();
     />
 
     <!-- Custom CSS file -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <?php
     // require MySQL connection
@@ -55,8 +62,9 @@ ob_start();
           B-2 Suryadeep Bunglows Sangath-3 Motera Ahmedabad-380005
         </p>
         <div class="font-rale fs-14">
-          <a href="#" class="px-3 border-right border-left text-dark">Login</a>
+          <a href="#" class="px-3 border-right text-dark"><?php echo $user['firstName'] ?? "Login"?></a>
           <a href="cart.php" class="px-3 border-right text-dark">Wishlist(<?php echo count($product->getData(table: 'wishlist'))?>)</a>
+            <a href="login.php" class="px-3 border-right text-dark">Logout</a>
         </div>
       </div>
 

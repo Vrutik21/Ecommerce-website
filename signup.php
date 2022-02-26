@@ -1,70 +1,102 @@
+<?php
+ if ($_SERVER['REQUEST_METHOD']=='POST'){
+     require 'Login/register-process.php';
+ }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shopcart-Login</title>
+    <title>Shopcart-register</title>
 
     <!-- Bootstrap CDN -->
     <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
     />
 
     <!-- Owl-carousel CDN -->
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-        integrity="sha256-UhQQ4fxEeABh4JrcmAJ1+16id/1dnlOEVCFOxDef9Lw="
-        crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+            integrity="sha256-UhQQ4fxEeABh4JrcmAJ1+16id/1dnlOEVCFOxDef9Lw="
+            crossorigin="anonymous"
     />
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-        integrity="sha256-kksNxjDRxd/5+jGurZUJd1sdR2v+ClrCl3svESBaJqw="
-        crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+            integrity="sha256-kksNxjDRxd/5+jGurZUJd1sdR2v+ClrCl3svESBaJqw="
+            crossorigin="anonymous"
     />
 
     <!-- font awesome icons -->
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ="
-        crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+            integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ="
+            crossorigin="anonymous"
     />
 
     <!-- Custom CSS file -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="Login/login.css" />
+
 </head>
 <body>
-<div>
-    <div class="container p-5">
-        <form>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Username</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your personal info with anyone else.</small>
+<section id="signup-form">
+    <div class="image"></div>
+    <div class="container">
+        <div id="signup" class="row d-flex justify-content-center align-items-center" style="margin-top: 17rem";>
+        <div class="col-7">
+            <img class="img-fluid" src="images/kindpng_7329685.png" alt="login_image">
+        </div>
+        <div id="sign" class="col-5 mt-4">
+            <div class="d-flex justify-content-center align-items-center">
+                <form action="signup.php" method="post" enctype="multipart/form-data" id="reg-form" >
+                    <h5 class="text-center">REGISTER TO START SHOPPING!</h5>
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" value="<?php if (isset($_POST['firstName'])) echo $_POST['firstName'];?>" required name="firstName" id="firstName" class="form-control" placeholder="First Name">
+                        </div>
+                        <div class="col">
+                            <input type="text" value="<?php if (isset($_POST['lastName'])) echo $_POST['lastName'];?>" required name="lastName" id="lastName" class="form-control" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="col">
+                            <input type="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>" required name="email" id="email" class="form-control" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="col">
+                            <input type="password" required name="password" id="password" class="form-control" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="col">
+                            <input type="password" required name="confirm_pwd" id="confirm_pwd" class="form-control" placeholder="Confirm Password">
+                            <small id="confirm_error" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="agreement"  class="form-check-input" required>
+                        <label for="agreement" class="form-check-label text-black-75 mx-2">I agree to the <a href="#">terms and conditions.</a></label>
+                    </div>
+                    <div class="submit-btn text-center my-4">
+                        <button type="submit" class="btn btn-warning rounded-pill text-dark px-5">Create Account</button>
+                    </div>
+                    <h6 class="text-center">Already have an account?<a href="login.php" style=""> Login here</a></h6>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+        </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
+    </div>
+</section>
 
 
 
@@ -102,6 +134,6 @@
 ></script>
 
 <!-- Custom js -->
-<script src="index.js"></script>
+<script src="Login/login.js"></script>
 </body>
 </html>
