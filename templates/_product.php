@@ -5,10 +5,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         //    call method addToCart
         $cart->addToCart($_POST['user_id'],$_POST['item_id']);
     }
+    if(isset($_POST['products']))
+    {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    }
 }
 
+
+
+
 //foreach loop to fetch products
-$item_id = $_GET['item_id']??1;
+$item_id = $_GET['item_id']??0;
 
 foreach ($product->getData() as $item){
     if ($item['item_id']==$item_id){
@@ -40,8 +47,12 @@ foreach ($product->getData() as $item){
                         if (in_array($item['item_id'],$cart->getCartId($product->getData('cart'))??[])){
                             echo '<button type="submit" disabled class="btn btn-success form-control">In the cart</button>';
                         }else{
-                            echo '<button type="submit" name="products" class="btn btn-warning form-control">Add to cart</button>';
+
+                            echo '<button type="submit" id="add" name="products" class="btn btn-warning form-control">Add to cart</button>';
+
+
                         }
+
                         ?>
                         </form>
                     </div>
