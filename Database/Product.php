@@ -36,10 +36,7 @@ return $resultArray;
         return $resultArray;
 
     }
-
     }
-
-
 }
 
 

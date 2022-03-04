@@ -1,7 +1,6 @@
 <?php
- if ($_SERVER['REQUEST_METHOD']=='POST'){
-     require 'Login/register-process.php';
- }
+require 'Login/config.php';
+require 'Login/register-process.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,31 +54,42 @@
         </div>
         <div id="sign" class="col-5 mt-4">
             <div class="d-flex justify-content-center align-items-center">
-                <form action="signup.php" method="post" enctype="multipart/form-data" id="reg-form" >
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h5 class="text-center">REGISTER TO START SHOPPING!</h5>
                     <br>
                     <div class="form-row">
                         <div class="col">
-                            <input type="text" value="<?php if (isset($_POST['firstName'])) echo $_POST['firstName'];?>" required name="firstName" id="firstName" class="form-control" placeholder="First Name">
-                        </div>
-                        <div class="col">
-                            <input type="text" value="<?php if (isset($_POST['lastName'])) echo $_POST['lastName'];?>" required name="lastName" id="lastName" class="form-control" placeholder="Last Name">
-                        </div>
-                    </div>
-                    <div class="form-row my-4">
-                        <div class="col">
-                            <input type="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>" required name="email" id="email" class="form-control" placeholder="Email">
+                            <input type="text" value="<?php echo $username; ?>"
+                                   required name="username"
+                                   class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"
+                                   placeholder="User Name">
+                            <span class="invalid-feedback"><?php echo $username_err; ?></span>
                         </div>
                     </div>
                     <div class="form-row my-4">
                         <div class="col">
-                            <input type="password" required name="password" id="password" class="form-control" placeholder="Password">
+                            <input type="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>"
+                                   required name="email"
+                                   class="form-control"
+                                   placeholder="Email">
                         </div>
                     </div>
                     <div class="form-row my-4">
                         <div class="col">
-                            <input type="password" required name="confirm_pwd" id="confirm_pwd" class="form-control" placeholder="Confirm Password">
-                            <small id="confirm_error" class="text-danger"></small>
+                            <input type="password" required name="password"
+                                   value="<?php echo $password; ?>"
+                                   class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"
+                                   placeholder="Password">
+                            <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                        </div>
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="col">
+                            <input type="password" required name="confirm_password"
+                                   value="<?php echo $confirm_password; ?>"
+                                   class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>"
+                                   placeholder="Confirm Password">
+                            <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
                         </div>
                     </div>
                     <div class="form-check form-check-inline">
@@ -87,7 +97,9 @@
                         <label for="agreement" class="form-check-label text-black-75 mx-2">I agree to the <a href="#">terms and conditions.</a></label>
                     </div>
                     <div class="submit-btn text-center my-4">
-                        <button type="submit" class="btn btn-warning rounded-pill text-dark px-5">Create Account</button>
+                        <button type="submit" class="btn btn-warning rounded-pill text-dark px-5">Register</button>
+                        <button type="reset" class="btn btn-warning rounded-pill text-dark px-5 ml-5">Reset</button>
+
                     </div>
                     <h6 class="text-center">Already have an account?<a href="login.php" style=""> Login here</a></h6>
                 </form>
