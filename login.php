@@ -1,18 +1,11 @@
 <?php
-session_start();
-include "Login/helper.php";
-?>
+require 'Login/login-process.php';
 
-<?php
-require ('Login/connection.php');
 
-$user = array();
-if (isset($_SESSION['user_id'])){
-    $user = get_user_info($con,$_SESSION['user_id']);
+if (!empty($login_err)) {
+    echo '<div class="alert alert-danger">' . $login_err . '</div>';
 }
-if ($_SERVER['REQUEST_METHOD']=='POST'){
-    include 'Login/login-process.php';
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,13 +64,18 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
                         <br>
                         <div class="form-row">
                             <div class="col">
-                                <input type="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>" required name="email" id="email" class="form-control" placeholder="Email">
+                                <input type="text" name="username"
+                                       class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"
+                                       value="<?php echo $username; ?>" placeholder="Username">
+                                <span class="invalid-feedback"><?php echo $username_err; ?></span>
                             </div>
                         </div>
                         <div class="form-row my-4">
                             <div class="col">
-                                <input type="password" required name="password" id="password" class="form-control" placeholder="Password">
-                                <small id="confirm_err" class="text-danger"></small>
+                                <input type="password" name="password"
+                                       class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"
+                                placeholder="Password">
+                                <span class="invalid-feedback"><?php echo $password_err; ?></span>
                             </div>
                         </div>
                         <div class="form-check form-check-inline">

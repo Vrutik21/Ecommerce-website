@@ -1,12 +1,8 @@
 <?php
+// Initialize the session
 session_start();
-include('Login/helper.php');
+error_reporting(E_ERROR | E_PARSE);
 
-$user = array();
-if (isset($_SESSION['user_id'])) {
-require('Login/connection.php');
-$user = get_user_info($con, $_SESSION['user_id']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,9 +58,19 @@ $user = get_user_info($con, $_SESSION['user_id']);
           B-2 Suryadeep Bunglows Sangath-3 Motera Ahmedabad-380005
         </p>
         <div class="font-rale fs-14">
-          <a href="#" class="px-3 border-right text-dark"><?php echo $user['firstName'] ?? "Login"?></a>
-          <a href="cart.php" class="px-3 border-right text-dark">Wishlist(<?php echo count($product->getData(table: 'wishlist'))?>)</a>
-            <a href="login.php" class="px-3 border-right text-dark">Logout</a>
+            <?php
+            // Check if the user is logged in, if not then redirect him to login page
+            if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+                echo '<a href="#" class="px-3 border-right text-dark">Guest user</a>';
+                echo '<a href="login.php" class="px-3 border-right text-dark">Login</a>';
+                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData(table: "wishlist")).')</a>';
+            }
+            else{
+                echo '<a href="#" class="px-3 border-right text-dark">'.'Welcome '.htmlspecialchars($_SESSION["username"]).'</a>';
+                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData(table: "wishlist")).')</a>';
+                echo '<a href="logout.php" class="px-3 border-right text-dark">Logout</a>';
+            }
+            ?>
         </div>
       </div>
 
