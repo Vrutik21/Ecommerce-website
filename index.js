@@ -140,4 +140,62 @@ $(document).ready(function () {
         //closing ajax request
       }});
   });
+
+//  addToCart
+  $(".addItem").click(function (e){
+    e.preventDefault();
+    var form = $(this).closest(".form-submit");
+    var pid = form.find(".pid").val();
+    var uid = form.find(".uid").val();
+    var comp = form.find(".comp").val();
+    var name = form.find(".name").val();
+    var price = form.find(".price").val();
+    var tprice = form.find(".tprice").val();
+    var image = form.find(".image").val();
+
+    $.ajax({
+      url: "./addToCart.php",
+      method:"post",
+      data: {pid:pid,uid:uid,comp:comp,name:name,price:price,tprice:tprice,image:image},
+      success:function (response){
+        $("").html(response);
+      }
+    });
+    location.reload(true);
+  });
+
+  $(".qty").on('change',function (){
+      var $el = $(this).closest('#Qty');
+      var pid = $el.find(".pid").val();
+      var price = $el.find(".price").val();
+      var qty = $el.find(".qty").val();
+      location.reload(true);
+      $.ajax({
+          url: 'templates/_cart_template.php',
+          method: 'post',
+          cache: false,
+          data: {qty:qty,pid:pid,price:price},
+          success:function (response){
+              console.log(response);
+
+          }
+      });
+  });
+
+  // Sending Form data to the server
+  $("#placeOrder").submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: 'order.php',
+      method: 'post',
+      data: $('form').serialize() + "&action=order",
+      success: function(response) {
+        $("#order").html(response);
+      }
+    });
+  });
 });
+
+
+
+

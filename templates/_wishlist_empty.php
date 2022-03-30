@@ -1,7 +1,7 @@
 <!-- shopping cart -->
 <section id="cart" class="py-3">
     <div class="container-fluid w-100">
-        <h4 class="text-center">Wishlist</h4>
+        <h4 class="text-center display-4 color-primary">Wishlist</h4>
         <div class="row">
             <div class="col">
                 <!--Empty cart-->

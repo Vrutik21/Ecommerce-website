@@ -1,8 +1,9 @@
 <?php
 // Initialize the session
+ob_start();
 session_start();
 error_reporting(E_ERROR | E_PARSE);
-
+include 'addToCart.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +45,31 @@ error_reporting(E_ERROR | E_PARSE);
 
     <!-- Custom CSS file -->
     <link rel="stylesheet" href="css/style.css" />
+      <style>
+
+          .to-top {
+              background: #023fb1;
+              position: fixed;
+              bottom: 16px;
+              right:32px;
+              width:60px;
+              height:60px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size:32px;
+              color:white;
+              opacity:0;
+              pointer-events: none;
+              transition: all .4s;
+          }
+          .to-top.active {
+              bottom:32px;
+              pointer-events: auto;
+              opacity:1;
+          }
+      </style>
 
     <?php
     // require MySQL connection
@@ -51,6 +77,20 @@ error_reporting(E_ERROR | E_PARSE);
     ?>
   </head>
   <body>
+  <a href="#head" class="to-top" style="text-decoration: none">
+      <i class="fas fa-chevron-up"></i>
+  </a>
+  <script>
+      const toTop = document.querySelector(".to-top");
+
+      window.addEventListener("scroll", () => {
+          if (window.scrollY > 1400) {
+              toTop.classList.add("active");
+          } else {
+              toTop.classList.remove("active");
+          }
+      })
+  </script>
     <!-- header -->
     <header id="head" class="font-rale">
       <div class="strip d-flex justify-content-between px-4 py-1 bg-light">
@@ -59,15 +99,21 @@ error_reporting(E_ERROR | E_PARSE);
         </p>
         <div class="font-rale fs-14">
             <?php
+            $q="SELECT * FROM orders WHERE name ='$_SESSION[username]'";
+            $res=mysqli_query($link,$q);
+
             // Check if the user is logged in, if not then redirect him to login page
             if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 echo '<a href="#" class="px-3 border-right text-dark">Guest user</a>';
                 echo '<a href="login.php" class="px-3 border-right text-dark">Login</a>';
-                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData(table: "wishlist")).')</a>';
+                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData("cart1")).')</a>';
             }
             else{
-                echo '<a href="#" class="px-3 border-right text-dark">'.'Welcome '.htmlspecialchars($_SESSION["username"]).'</a>';
-                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData(table: "wishlist")).')</a>';
+                echo '<a href="profile.php" class="px-3 border-right text-dark">'.'Welcome '.htmlspecialchars($_SESSION["username"]).'</a>';
+                echo '<a href="cart.php" class="px-3 border-right text-dark">Wishlist('.count($product->getData("cart1")).')</a>';
+                echo '<a href="deliver.php" class="px-3 border-right text-dark">Orders('
+                .mysqli_num_rows($res)
+            .')</a>';
                 echo '<a href="logout.php" class="px-3 border-right text-dark">Logout</a>';
             }
             ?>
@@ -79,7 +125,7 @@ error_reporting(E_ERROR | E_PARSE);
         class="navbar navbar-expand-lg navbar-dark color-second-bg font-oxygen fw-bold"
       >
         <div class="container-fluid m-auto">
-          <a class="navbar-brand" href="index.php">Shopcart</a>
+          <a class="navbar-brand fw-bold" href="index.php"><h3>Shopcart</h3></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -94,27 +140,21 @@ error_reporting(E_ERROR | E_PARSE);
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#"
-                  >On Sale </a>
+                <a class="nav-link active fs-18" aria-current="page" href="#top-sale"
+                  >On Sale</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Category</a>
+                <a class="nav-link active fs-18" href="#special-price">Categories</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"
-                  >Products <i class="fas fa-chevron-down"></i
-                ></a>
+                <a class="nav-link active fs-18" href="#latest-product"
+                  >Latest Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
+                <a class="nav-link active fs-18" href="#blogs">Blogs</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  >Category <i class="fas fa-chevron-down"></i
-                ></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Coming Soon</a>
+                <li class="nav-item">
+                <a class="nav-link active fs-18" target="_blank" href="https://www.techadvisor.com/news/pc-components/">Upcoming Products</a>
               </li>
             </ul>
             <form class="d-flex mr-5">
@@ -128,14 +168,22 @@ error_reporting(E_ERROR | E_PARSE);
                 Search
               </button>
             </form>
-            <form action="#" class="font-size-14 font-rale">
+            <div class="font-size-14 font-rale">
               <a href="cart.php" class="py-2 rounded-pill color-primary-bg">
                 <span class="px-2 font-size-16 text-white"
                   ><i class="fas fa-shopping-cart"></i
                 ></span>
-                <span class="px-3 py-2 rounded-pill text-dark bg-light"><?php echo count($product->getData(table: 'cart'))?></span>
+                <span id="cart-item" class="px-3 py-2 rounded-pill text-dark bg-light"><?php
+                    $sql = "SELECT * from cart";
+
+                    if ($result = mysqli_query($link, $sql)) {
+
+                        // Return the number of rows in result set
+                        $rowcount = mysqli_num_rows( $result );
+                        echo $rowcount;
+                    }?></span>
               </a>
-            </form>
+            </div>
           </div>
         </div>
       </nav>

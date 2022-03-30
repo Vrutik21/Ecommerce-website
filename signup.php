@@ -76,6 +76,14 @@ require 'Login/register-process.php';
                     </div>
                     <div class="form-row my-4">
                         <div class="col">
+                            <input type="address" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>"
+                                   required name="email"
+                                   class="form-control"
+                                   placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-row my-4">
+                        <div class="col">
                             <input type="password" required name="password"
                                    value="<?php echo $password; ?>"
                                    class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"

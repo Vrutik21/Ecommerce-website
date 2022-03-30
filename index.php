@@ -1,13 +1,16 @@
+
 <?php
-
-
 
 // header
 include("header.php");
+?>
 
+<?php
 // banner-area
 include("templates\_banner_area.php");
- 
+?>
+
+<?php
 // top-sale
 include("templates\_top_sale.php");
 
@@ -27,7 +30,7 @@ include("templates\_blogs.php");
 include("footer.php")
 ?>
 
-   
+
 
      
 

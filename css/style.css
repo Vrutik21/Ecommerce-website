@@ -1,6 +1,10 @@
 /* Sass Template */
 @import url("https://fonts.googleapis.com/css2?family=Oswald&family=Oxygen&family=Raleway:wght@300;400&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* font template */
 .font-oswald {
   font-family: "Oswald", sans-serif;
@@ -146,5 +150,16 @@
   margin-top: 1rem;
   margin-right: 1rem;
 }
+
+
+
+
+@media (min-width: 500px) {
+  .to-top {
+    margin: 30px;
+  }
+}
+
+
 
 

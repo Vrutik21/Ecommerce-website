@@ -1,35 +1,85 @@
 <!-- main -->
 <?php
+$conn = new mysqli("localhost","root","","shopcart");
+if($conn->connect_error){
+    die("Connection Failed!".$conn->connect_error);
+}
+if (isset($_POST['qty'])){
+    $qty = $_POST['qty'];
+    $pid = $_POST['pid'];
+    $price = $_POST['price'];
+
+    $totalPrice = $qty * $price;
+
+    $stmt = $conn->prepare("UPDATE cart SET qty=?,item_price=? WHERE item_id=?");
+    $stmt->bind_param("isi",$qty,$totalPrice,$pid);
+    $stmt->execute();
+
+}
+
 if ($_SERVER['REQUEST_METHOD']='POST'){
+    if (isset($_POST['saveForLater'])) {
+        $cart->SaveForLater($_POST['item_id']);
+    }
     if (isset($_POST['delete-cart-item'])){
         $deleteitem = $cart->deleteCart($_POST['item_id']);
     }
-//    save for later
-    if (isset($_POST['wishlist-item'])){
-        $cart->SaveForLater($_POST['item_id']);
+
+    if (isset($_POST['checkout'])){
+        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+
+            echo ("<script>
+    window.alert('Please log in to proceed further!');
+    window.location.href='login.php';
+    </script>");
+
+        }else{
+
+            header("Location: checkout.php");
+        }
+    }
+    if (isset($_POST['home'])){
+        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+
+            echo ("<script>
+    window.alert('Please log in to proceed further!');
+    window.location.href='login.php';
+    </script>");
+
+        }else{
+
+            header("Location: checkout2.php");
+        }
     }
 }
 ?>
 <main id="main-site">
     <!-- shopping cart -->
-    <section id="cart" class="py-3">
+    <section id="cart" class="py-3 Qty">
         <div class="container-fluid w-75">
-            <h4 class="text-center">Shopping Cart</h4>
+            <h4 class="text-center display-4 color-primary">Shopping Cart</h4>
             <div class="row">
                 <div class="col-sm-9">
                     <?php
-                    foreach ($product->getData(table:'cart') as $item){
-                        $cart_1 = $product->getProduct($item['item_id']);
-                        $subTotal[]=array_map(function ($item){
-                        ?>
+                    $stmt = $link->prepare('SELECT * FROM cart');
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $grand_total = 0;
+                    while ($row = $result->fetch_assoc()){
+                        $imageURL = 'images/'.$row['item_image']
+                    ?>
                     <!-- cart-items -->
                     <div class="row border-top py-3 mt-3">
                         <div class="col-sm-3">
-                            <img src='<?php echo $item['item_image']??'./images/1050ti.png'?>' class="img-fluid" />
+                            <div class="product">
+                                <a href="<?php printf('%s?item_id=%s','product.php',$row['item_id']);?>">
+                            <img src='<?php echo $imageURL??'./images/1050ti.png'?>' class="img-fluid" />
+                                </a>
+                            </div>
                         </div>
                         <div class="col-sm-8">
-                            <h6 class="fs-20"><?php echo $item['item_name']??'Unknown'?></h6>
-                            <p class="fs-16 fw-bold m-0">By <?php echo $item['item_company']??'Unknown'?></p>
+                            <h6 class="fs-20"><?php echo $row['item_name']??'Unknown'?></h6>
+                            <p class="fs-16 fw-bold m-0">By <?php echo $row['item_company']??'Unknown'?></p>
                             <!-- rating -->
                             <div class="d-flex">
                                 <div class="rating text-warning fs-12 text-center">
@@ -44,47 +94,38 @@ if ($_SERVER['REQUEST_METHOD']='POST'){
                             <!-- !rating -->
 
                             <!-- quantity -->
-                            <div class="qty d-flex pt-2">
-                                <div class="d-flex w-25 h-25 pt-1">
-                                    <button class="qty-up border bg-light" data-id="<?php echo $item['item_id']??'0';?>">
-                                        <i class="fas fa-angle-up"></i>
-                                    </button>
-                                    <input
-                                        type="text"
-                                        class="qty-input border w-100 bg-light"
-                                        data-id="<?php echo $item['item_id']??'0';?>"
-                                        disabled
-                                        value="1"
-                                        placeholder="1"
-                                    />
-                                    <button class="qty-down border bg-light" data-id="<?php echo $item['item_id']??'0';?>">
-                                        <i class="fas fa-angle-down"></i>
-                                    </button>
+                            <div class="d-flex pt-2">
+                                <div id="Qty" class="d-flex  pt-1">
+                                        <input type="hidden" class="pid" value="<?php echo $row['item_id']?>">
+                                        <input type="hidden" class="price" value="<?php echo $row['total_price']?>">
+                                        <input type="number" class="form-control qty" value="<?php echo $row['qty']?>" min="1" max="10">
                                 </div>
-                                <form method="post">
-                                    <input type="hidden" value="<?php echo $item['item_id']??0;?>" name="item_id">
+
+                                <form method="post" class="pl-1 pt-1">
+                                    <input type="hidden" value="<?php echo $row['item_id']??0;?>" name="item_id">
                                     <button type="submit" class="btn text-danger border-right" name="delete-cart-item">Delete</button>
                                 </form>
 
-                                <form method="post">
-                                    <input type="hidden" value="<?php echo $item['item_id']??0;?>" name="item_id">
-                                    <button type="submit" class="btn text-danger" name="wishlist-item">Save for Later</button>
+                                <form method="post" class="pt-1">
+                                    <input type="hidden" name="item_id" value="<?php echo $row['item_id']??0;?>">
+                                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']??0;?>">
+                                    <button type="submit" class="btn text-danger" name="saveForLater">Save for Later</button>
                                 </form>
                             </div>
                             <!-- !quantity -->
                         </div>
                         <div class="col-sm-1 text-right">
                             <div class="fs-20 text-danger">
-                                ₹<span class="product-price" data-id="<?php echo $item['item_id']??0;?>"><?php echo $item['item_price']??0;?></span>
+                                <form method="post">
+                                    ₹<span><?php echo $row['item_price']??0;?></span>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                     <!-- !cart items -->
                     <?php
-                            return $item['item_price'];
-//                  end of array_map
-                        },$cart_1);
-//                  end of for each loop
+                    $grand_total += $row['item_price'];
                     }
                     ?>
 
@@ -97,12 +138,25 @@ if ($_SERVER['REQUEST_METHOD']='POST'){
                         </h6>
                         <div class="border-top py-4">
                             <h5>
-                                Subtotal(<?php echo isset($subTotal) ? count($subTotal) : 0; ?> items):&nbsp;<span class="text-danger">₹</span
-                                ><span class="text-danger" id="deal-price"><?php echo isset($subTotal) ? $cart->getSum($subTotal) : 0; ?></span>
+                                Subtotal(<?php $sql = "SELECT * from cart";
+
+                                if ($result = mysqli_query($link, $sql)) {
+
+                                    // Return the number of rows in result set
+                                    $rowcount = mysqli_num_rows( $result );
+                                    echo $rowcount;
+                                } ?> items):&nbsp;<span class="text-danger">₹</span
+                                ><span class="text-danger"><?php echo $grand_total?></span>
                             </h5>
-                            <button type="button" class="btn btn-warning mt-3 fs-14">
-                                Proceed To Buy
-                            </button>
+                            <form method="post">
+                                <button type="submit" name='checkout' class="btn btn-warning mt-3 fs-14 <?php ($grand_total>1)?"":"disabled"?>">
+                                    Pay on COD
+                                </button>
+                                <button type="submit" name='home' class="btn btn-warning mt-3 fs-14">
+                                    Pay Online
+                                </button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

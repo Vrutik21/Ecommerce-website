@@ -3,8 +3,8 @@ shuffle($product_shuffle);
 ?>
 <!-- blogs -->
       <section id="blogs">
-        <div class="container py-4">
-          <h4 class="text-center pt-4">Blogs</h4>
+        <div class="container pb-5 pt-2">
+          <h4 class="display-4 text-center color-primary">Blogs</h4>
           <hr />
           <div class="owl-carousel owl-theme">
               <?php foreach ($product_shuffle as $item){?>
