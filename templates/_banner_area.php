@@ -3,69 +3,35 @@
       <!-- Owl-carousel -->
       <section id="banner-area" class="font-rale">
         <div class="owl-carousel owl-theme color-gradient">
+            <?php
+
+            require_once 'dbconfig.php';
+            include 'addToCart.php';
+            $select_stmt = $db->prepare("SELECT * FROM product ORDER BY RAND() LIMIT 5");
+            $select_stmt->execute();
+            while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)){
+                $imageURL = 'images/'.$row['item_image']
+            ?>
           <div class="item">
+              <div class="product">
+                  <a href="<?php printf('%s?item_id=%s','product.php',$row['item_id']);?>">
             <img
-              src="./images/1050ti.png"
-              style="width: 40em"
-              class="img-fluid m-auto pt-2"
-              alt="Banner1"
-            />
+              src="<?php echo $imageURL??'./images/ADATA Premier SP550 SSD.png';?>"
+              style="width: 32rem"
+              class="img-fluid m-auto p-2"
+            /> </a>
             <div class="m-auto text-white px-5">
-              <h5>ROG STRIX GTX 1050ti</h5>
+              <h5><?php echo $row['item_name']??'Unknown'?></h5>
               <p>
-                The ROG Strix GTX 1050 Ti is clocked at 1,506MHz boost and
-                1,392MHz base clock in OC Mode, with its GDDR5 memory clocked at
-                7GHz (effective). That makes it 10% faster than reference in
-                3DMark Firestrike Ultra, 11% Faster in DOOM at Ultra settings
-                and 9% faster in Rise of the Tomb Raider at Very High settings.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores earum ex facere illo in laboriosam numquam qui. Ab adipisci aliquid architecto atque cum dolores doloribus repellendus, sint totam unde velit voluptates voluptatibus. Consectetur, consequatur dolorem enim ex laborum possimus praesentium quae voluptatem! Ab laudantium ratione repellat soluta velit voluptatum?
               </p>
-              <button type="button" class="btn btn-outline-primary">
-                Buy Now
-              </button>
+                <a href="<?php printf('%s?item_id=%s','product.php',$row['item_id']);?>">
+                     <button type="button" name="view" class="btn btn-outline-primary">View More</button>
+                </a>
             </div>
           </div>
-          <div class="item">
-            <img
-              src="./images/radeon rx480.png"
-              style="width: 40em"
-              class="img-fluid m-auto pt-2"
-              alt="Banner2"
-            />
-            <div class="m-auto text-white px-5">
-              <h5>AMD Radeon RX480</h5>
-              <p>
-                Free yourself with Radeon™ RX 480 Series graphics built on
-                incredible "Polaris" architecture.We've re-imagined everything a
-                gaming card can and should be and made it even more accessible
-                than ever. You can play the latest eSports titles, the most
-                popular AAA games, and experience the next level of immersion
-                with exceptional VR.
-              </p>
-              <button type="button" class="btn btn-outline-primary">
-                Buy Now
-              </button>
-            </div>
           </div>
-          <div class="item">
-            <img
-              src="./images/1080ti.png"
-              style="width: 40em"
-              class="img-fluid m-auto pt-2"
-              alt="Banner3"
-            />
-            <div class="m-auto text-white px-5">
-              <h5>ROG STRIX GTX 1080ti</h5>
-              <p>
-                Packed with extreme gaming horsepower, the GeForce GTX 1080 Ti
-                delivers up to 35 percent more performance of the GTX 1080 and
-                comes with 11GB of next-generation GDDR5X memory, running at a
-                staggering 11Gbps, for the ultimate in memory bandwidth and
-                gaming prowess.
-              </p>
-              <button type="button" class="btn btn-outline-primary">
-                Buy Now
-              </button>
-            </div>
+            <?php }?>
           </div>
         </div>
       </section>

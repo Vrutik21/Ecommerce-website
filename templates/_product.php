@@ -1,24 +1,26 @@
 <?php
+require_once 'dbconfig.php';
+include 'addToCart.php';
+$select_stmt = $db->prepare("SELECT * FROM product ORDER BY RAND()");
+$select_stmt->execute();
+
 //request method post
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-    if (isset($_POST['products'])){
-        //    call method addToCart
-        $cart->addToCart($_POST['user_id'],$_POST['item_id']);
-    }
     if(isset($_POST['products']))
     {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header("Location: $_SERVER[HTTP_REFERER]");
+    }
+    if (isset($_POST['add-item'])){
+        $cart->saveForLater($_POST['item_id'],'cart','cart1');
     }
 }
 
-
-
-
-//foreach loop to fetch products
+//while loop to fetch products
 $item_id = $_GET['item_id']??0;
 
-foreach ($product->getData() as $item){
-    if ($item['item_id']==$item_id){
+while($row = $select_stmt->fetch(PDO::FETCH_ASSOC)){
+    if ($row['item_id']==$item_id){
+        $imageURL = 'images/'.$row['item_image'];
     ?>
             
 <!-- product -->
@@ -27,40 +29,37 @@ foreach ($product->getData() as $item){
         <div class="row">
             <div class="col-sm-6">
                 <img
-                    src="<?php echo $item['item_image'];?>"
+                    src="<?php echo $imageURL;?>"
                     alt=""
                     class="img-fluid"
                     style="width: 28rem"
                     alt="product1"
                 />
-                <div class="form-row pt-4">
-                    <div class="col-5">
-                        <button type="submit" class="btn btn-danger form-control">
-                            Proceed to buy
-                        </button>
-                    </div>
-                    <div class="col-5">
-                        <form method="post">
-                            <input type="hidden" name="item_id" value="<?php echo $item['item_id']; ?>">
-                            <input type="hidden" name="user_id" value="<?php echo 1; ?>">
-                        <?php
-                        if (in_array($item['item_id'],$cart->getCartId($product->getData('cart'))??[])){
-                            echo '<button type="submit" disabled class="btn btn-success form-control">In the cart</button>';
-                        }else{
-
-                            echo '<button type="submit" id="add" name="products" class="btn btn-warning form-control">Add to cart</button>';
-
-
-                        }
-
-                        ?>
+                <div class="form-row pt-5 d-flex justify-content-center">
+                    <div class="col-6 mr-5">
+                        <form method="post" class="form-submit">
+                            <input type="hidden" class="pid" value="<?php echo $row['item_id']??'1'; ?>">
+                            <input type="hidden" class="uid" value="<?php echo $_SESSION['id']??'1'; ?>">
+                            <input type="hidden" class="comp" value="<?php echo $row['item_company']??'1'; ?>">
+                            <input type="hidden" class="name" value="<?php echo $row['item_name']??'1'; ?>">
+                            <input type="hidden" class="price" value="<?php echo $row['item_price']??'1'; ?>">
+                            <input type="hidden" class="tprice" value="<?php echo $row['item_price']??'1'; ?>">
+                            <input type="hidden" class="image" value="<?php echo $row['item_image']??'1'; ?>">
+                            <?php
+                            if (in_array($row['item_id'],$cart->getCartId($product->getData('cart'))??[])){
+                                echo '<button disabled class="btn btn-outline-success w-75 fw-bold">In the cart</button>';
+                            }else{
+                                echo '<button type="submit" class="btn btn-outline-primary w-75 fw-bold addItem">Add to cart</button>';
+                            }
+                            ?>
+                            <div id="message"></div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
-                <h6 class="fs-20"><?php echo $item['item_name']??'Unknown';?></h6>
-                <p class="fs-16 fw-bold m-0">By <?php echo $item['item_company']??'Brand';?></p>
+                <h6 class="fs-20"><?php echo $row['item_name']??'Unknown';?></h6>
+                <p class="fs-16 fw-bold m-0">By <?php echo $row['item_company']??'Brand';?></p>
                 <div class="d-flex">
                     <div class="rating text-warning fs-12 text-center">
                         <span><i class="fas fa-star"></i></span>
@@ -84,7 +83,7 @@ foreach ($product->getData() as $item){
                     <tr class="fs-14">
                         <td>Deal Price:</td>
                         <td>
-                            <span class="text-danger">₹<?php echo $item['item_price']??'0';?></span>
+                            <span class="text-danger">₹<?php echo $row['item_price']??'0';?></span>
                             <small class="fs-12 text-black-50"
                             >Inclusive of all taxes</small
                             >
@@ -147,20 +146,20 @@ foreach ($product->getData() as $item){
                             <div class="qty d-flex">
                                 <h6 class="text-black-50 m-auto">Qty</h6>
                                 <div class="px-4 d-flex">
-                                    <button class="qty-up border bg-light" data-id="<?php echo $item['item_id']??'0';?>">
+                                    <button class="qty-up border bg-light" data-id="<?php echo $row['item_id']??'0';?>">
                                         <i class="fas fa-angle-up"></i>
                                     </button>
                                     <input
                                         type="text"
                                         class="qty-input border px-1 w-50 bg-light"
-                                        data-id="<?php echo $item['item_id']??'0';?>"
+                                        data-id="<?php echo $row['item_id']??'0';?>"
                                         disabled
                                         value="1"
                                         placeholder="1"
                                     />
                                     <button
                                         class="qty-down border bg-light"
-                                        data-id="<?php echo $item['item_id']??'0';?>">
+                                        data-id="<?php echo $row['item_id']??'0';?>">
                                         <i class="fas fa-angle-down"></i>
                                     </button>
                                 </div>

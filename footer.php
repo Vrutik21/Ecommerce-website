@@ -1,5 +1,5 @@
  <!-- footer -->
- <section id="footer" class="color-gradient text-white py-5">
+ <section id="footer" class="color-gradient text-white pt-4 mt-4">
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="col-lg-3 col-12">
@@ -34,10 +34,10 @@
           <div class="col-lg-2 col-12">
             <h4>Account</h4>
             <div class="d-flex flex-column flex-wrap">
-              <a href="#" class="fs-14 text-white pb-1">My Account</a>
-              <a href="#" class="fs-14 text-white pb-1">Order History</a>
-              <a href="#" class="fs-14 text-white pb-1">Wish List</a>
-              <a href="#" class="fs-14 text-white pb-1">Logout</a>
+              <a href="cart.php" class="fs-14 text-white pb-1">Cart Items</a>
+              <a href="deliver.php" class="fs-14 text-white pb-1">My Orders</a>
+              <a href="cart.php" class="fs-14 text-white pb-1">Wish List</a>
+              <a href="logout.php" class="fs-14 text-white pb-1">Logout</a>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
     </section>
     <div class="copyright text-center color-gradient text-white py-2">
       <p>
-        &copy;Copyrights 2022.Design By
+        &copy;Copyrights 2022. Design By
         <a
           href="https://github.com/Vrutik21?tab=repositories"
           class="text-white"
@@ -70,6 +70,7 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+
 
     <!-- Owl Carousel Js file -->
     <script

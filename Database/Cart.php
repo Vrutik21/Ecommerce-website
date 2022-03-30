@@ -76,7 +76,7 @@ public function getCartId($cartArr=null,$key='item_id'){
 }
 
 //save for later
-public function saveForLater($item_id = null,$saveTable = 'wishlist',$fromTable='cart'){
+public function saveForLater($item_id = null,$saveTable = 'cart1',$fromTable='cart'){
     if ($item_id!=null){
         $query = "INSERT INTO {$saveTable} SELECT * FROM {$fromTable} WHERE item_id={$item_id};";
         $query.= "DELETE FROM {$fromTable} WHERE item_id={$item_id};";
