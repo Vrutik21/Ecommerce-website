@@ -154,12 +154,8 @@ sort($unique);
                         <h6>₹<?php echo $row['item_price']??'0'?></h6>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <form method="post" class="form-submit">
-                                <input type="hidden" value="<?php echo $row['item_id']??0;?>" name="item_id">
-                                <button type="submit" class="btn btn-outline-primary border" name="delete-cart-item">Remove</button>
-                            </form>
-                            <div id="message"></div>
-                        </form>
+                        <button class="btn btn-outline-primary del_data"
+                                id="<?php echo $row['item_id']?>">Remove</button>
                     </div>
                 </div>
             </div>
@@ -168,7 +164,29 @@ sort($unique);
 </div>
 </div>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="delData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="#" id="delForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Remove Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="info_del">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" id="del">Yes</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 
 
 <div class="text-center text-white color-gradient d-flex justify-content-center p-4" style="margin-top: 15rem">
@@ -217,5 +235,34 @@ sort($unique);
 
 <!-- Custom js -->
 <script src="index.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '.del_data', function () {
+            var del_id = $(this).attr('id');
+            $.ajax({
+                url: "admin_item_del/delorder.php",
+                type: "post",
+                data: {del_id: del_id},
+                success: function (data) {
+                    $("#info_del").html(data);
+                    $("#delData").modal('show');
+                }
+            });
+        });
+
+        $(document).on('click','#del',function (){
+            $.ajax({
+                url:"admin_item_del/save_del.php",
+                type: "post",
+                data: $("#delForm").serialize(),
+                success:function (data){
+                    $("#info_del").html(data);
+                    $("#delData").modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

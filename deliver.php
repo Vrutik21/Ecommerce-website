@@ -206,4 +206,37 @@ include 'addToCart.php';
 <?php
 include "footer.php";
 ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '.del_data', function () {
+            var del_id = $(this).attr('id');
+            $.ajax({
+                url: "user_order_del/delorder.php",
+                type: "post",
+                data: {del_id: del_id},
+                success: function (data) {
+                    $("#info_del").html(data);
+                    $("#delData").modal('show');
+                }
+            });
+        });
 
+        $(document).on('click','#del',function (){
+            $.ajax({
+                url:"user_order_del/save_del.php",
+                type: "post",
+                data: $("#delForm").serialize(),
+                success:function (data){
+                    $("#info_del").html(data);
+                    $("#delData").modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    if (window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+    }
+</script>

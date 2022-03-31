@@ -217,8 +217,8 @@ if ($_SERVER['REQUEST_METHOD']='POST'){
         $result = $stmt->get_result();
 
         while ($row = $result->fetch_assoc()){
-            $phone = $row['phone']=null?"<span class='text-danger'>No details found!</span>":$row['phone'];
-            $add = $row['address']=null?"<span class='text-danger'>No details found!</span>":$row['address']
+            $phone = $row['phone']=''?"<span class='text-danger'>No details found!</span>":$row['phone'];
+            $add = $row['address']=''?"<span class='text-danger'>No details found!</span>":$row['address'];
             ?>
 
         <div class="col mt-2">
@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD']='POST'){
 
         <div class="col mt-3">
             <h3 class=" color-blue text-center">Update Info.</h3>
-<form action="" method="post" class="ml-3 mr-1 mt-4">
+<form action="#" method="post" class="ml-3 mr-1 mt-4">
                 <div class="form-group">
                     <input disabled type="text" name="name"  class="form-control text-center bg-primary fs-20 text-white" value="<?php echo $_SESSION['username']?>" placeholder="Enter Name" required>
                 </div>
@@ -269,13 +269,40 @@ if ($_SERVER['REQUEST_METHOD']='POST'){
                     <textarea name="address" class="form-control" rows="3" cols="10" placeholder="Update Delivery Address"><?php echo $row['address']??'';?></textarea>
                 </div>
                     <div class="form-group w-25 m-auto pt-2">
-                        <input type="submit" name="update" value="Update Account" class="btn btn-danger btn-block">
+                        <input type="button" data-toggle="modal" data-target="#exampleModal" value="Update Account" class="btn btn-danger btn-block">
                 </div>
-            </form>
+
         </div>
 </div>
         <?php }?>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you really want to update your account?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-primary" name="update">Yes</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div style="margin-top: 10rem"></div>
 <?php
 include "footer.php";
 ?>
+
+<script>
+    if (window.history.replaceState){
+        window.history.replaceState(null,null,window.location.href);
+    }
+</script>

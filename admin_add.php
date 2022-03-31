@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD']='POST') {
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword3" class="form-label">Product Image</label>
-            <input required type="file" class="form-control file" name="file">
+            <input required type="file" accept="image/*" class="form-control file" name="file">
         </div>
         <div class="text-center">
             <button type="submit" name="submit" class="btn btn-outline-primary mt-2">Add Product</button>

@@ -88,7 +88,7 @@ if (isset($_POST['submit'])){
                     <input readonly type="text" name="name"  class="form-control text-center color-second-bg fs-18 text-white" value="<?php echo htmlspecialchars($_SESSION["username"])?>" placeholder="Enter Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" value="
+                    <input readonly type="email" name="email" class="form-control" value="
                     <?php
                     $user = $_SESSION['username'];
                     $stmt = $link->prepare('SELECT * FROM users WHERE username=?');
@@ -103,7 +103,8 @@ if (isset($_POST['submit'])){
                     <input type="tel" name="phone" class="form-control" value="<?php echo $row['phone']??'';?>" placeholder="Enter Phone" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="address" class="form-control" rows="3" cols="10" placeholder="Enter Delivery Address Here"><?php echo $row['address']??'';?></textarea>
+                    <textarea required name="address" class="form-control" rows="3" cols="10" placeholder="Enter Delivery Address Here"><?php echo $row['address']??'';?></textarea>
+                    <small class="text-danger">Please update delivery information from the <a href="profile.php">Accounts Menu</a>.</small>
                 </div>
                         <?php }?>
                 <h6 class="text-center lead">Payment Mode</h6>
@@ -117,7 +118,7 @@ if (isset($_POST['submit'])){
         </div>
     </div>
 
-<div style="margin-top: 11rem"></div>
+<div style="margin-top: 12rem"></div>
 
 <?php
 include 'footer.php';

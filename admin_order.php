@@ -111,7 +111,6 @@ count($product->getData("orders")) ? include("_admin_order.php"):include ("_admi
     </p>
 </div>
 
-
 <!--jquery js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -142,6 +141,36 @@ count($product->getData("orders")) ? include("_admin_order.php"):include ("_admi
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
 ></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '.del_data', function () {
+            var del_id = $(this).attr('id');
+            $.ajax({
+                url: "admin_order_del/delorder.php",
+                type: "post",
+                data: {del_id: del_id},
+                success: function (data) {
+                    $("#info_del").html(data);
+                    $("#delData").modal('show');
+                }
+            });
+        });
+
+        $(document).on('click','#del',function (){
+            $.ajax({
+                url:"admin_order_del/save_del.php",
+                type: "post",
+                data: $("#delForm").serialize(),
+                success:function (data){
+                    $("#info_del").html(data);
+                    $("#delData").modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
